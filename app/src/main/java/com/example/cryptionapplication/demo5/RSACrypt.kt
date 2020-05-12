@@ -113,16 +113,16 @@ fun main() {
     //秘钥
     val privateKey = genKeyPair.private
    // println("公钥"+Base64.encode(publicKey.encoded))
-   // println("私钥"+Base64.encode(privateKey.encoded))
+    println("私钥"+Base64.encode(privateKey.encoded))
 
     var input = "嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿"
     //分段私钥加密
     val encrypt = RSACrypt.encryptPrivate(input, privateKey)
-    println("私钥加密="+encrypt)
+   // println("私钥加密="+encrypt)
 
     //分段解密
     val decryptPrivate = RSACrypt.decryptPrivate(encrypt, publicKey)
-    println("公钥解密="+decryptPrivate)
+  //  println("公钥解密="+decryptPrivate)
     // val encryptPublic = RSACrypt.encryptPublic(input, publicKey)
  //   println("共钥="+encryptPublic)
 
