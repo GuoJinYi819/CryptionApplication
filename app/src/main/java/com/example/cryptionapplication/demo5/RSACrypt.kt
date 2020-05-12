@@ -3,6 +3,8 @@ package com.example.cryptionapplication.demo5
 import com.wd.internet_security_algorithm.util.Base64
 import java.security.Key
 import java.security.KeyPairGenerator
+import java.security.PrivateKey
+import java.security.PublicKey
 import javax.crypto.Cipher
 
 /**ClassName: CryptionApplication
@@ -11,7 +13,28 @@ import javax.crypto.Cipher
  * @Description: 用途：非对称加密和解密
  *
  */
-class RSACrypt{
+object RSACrypt{
+    val transformation = "RSA"
+    //私钥加密    原文           私钥
+    fun encryptPrivate(input:String,privateKey: PrivateKey): String {
+        //1
+        var cipher:Cipher = Cipher.getInstance(transformation)
+        //2
+        cipher.init(Cipher.ENCRYPT_MODE,privateKey)
+        //3
+        val encrypt = cipher.doFinal(input.toByteArray())
+        return Base64.encode(encrypt)
+    }
+    //公钥
+    fun encryptPublic(input:String,publicKey: PublicKey): String {
+        //1
+        var cipher:Cipher = Cipher.getInstance(transformation)
+        //2
+        cipher.init(Cipher.ENCRYPT_MODE,publicKey)
+        //3
+        val encrypt = cipher.doFinal(input.toByteArray())
+        return Base64.encode(encrypt)
+    }
 
 }
 
@@ -27,18 +50,12 @@ fun main() {
     println("公钥"+Base64.encode(publicKey.encoded))
     println("私钥"+Base64.encode(privateKey.encoded))
 
-
-
-    //1
-    var cipher:Cipher = Cipher.getInstance("RSA")
-    //2
-    var key:Key? = null
-    cipher.init(Cipher.ENCRYPT_MODE,key)
-    //3
-
-
-
-
+    var input = "嘿嘿"
+    //私钥加密
+    val encrypt = RSACrypt.encryptPrivate(input, privateKey)
+    println("私钥="+encrypt)
+    val encryptPublic = RSACrypt.encryptPublic(input, publicKey)
+    println("共钥="+encryptPublic)
 
 
     //非对称加密的三部曲
